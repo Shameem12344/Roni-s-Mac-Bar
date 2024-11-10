@@ -142,7 +142,7 @@ if view_mode == "Main Metrics":
         )
         st.plotly_chart(fig_dow, use_container_width=True)
 
-elif:  # Additional Insights
+else:  # Additional Insights
     row1_col1, row1_col2 = st.columns(2)
     row2_col1, row2_col2 = st.columns(2)
     
