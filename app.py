@@ -142,7 +142,7 @@ if view_mode == "Main Metrics":
         )
         st.plotly_chart(fig_dow, use_container_width=True)
 
-else:  # Additional Insights
+elif:  # Additional Insights
     row1_col1, row1_col2 = st.columns(2)
     row2_col1, row2_col2 = st.columns(2)
     
@@ -244,7 +244,7 @@ shirt_data['Sent Date'] = pd.to_datetime(shirt_data['Sent Date'])
 
 # Add Shirt Insights tab to view_mode
 
-if view_mode == "Shirt Analysis":
+elif view_mode == "Shirt Analysis":
     st.markdown("## Shirt Size Analysis")
     
     # Create layout with two rows and two columns
