@@ -42,7 +42,7 @@ if not filtered_data.empty:
     st.plotly_chart(fig_monthly_orders)
 
     # Top Modifiers
-    modifier_counts = filtered_data['Modifier'].str.split(', ').explode().value_counts().head(15)
+    modifier_counts = filtered_data['Modifier'].str.split(', ').explode().value_counts().head(30)
     fig_modifiers = px.bar(modifier_counts, x=modifier_counts.index, y=modifier_counts.values, title="Top Modifiers")
     st.plotly_chart(fig_modifiers)
 else:
