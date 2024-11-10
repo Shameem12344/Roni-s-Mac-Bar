@@ -37,24 +37,13 @@ st.write(f"Most Popular Item: {popular_item}")
 
 # Monthly Orders Trend
 if not filtered_data.empty:
-monthly_orders = filtered_data.set_index('Sent Date').resample('M')['Order ID'].nunique()
-fig_monthly_orders = px.line(
-    monthly_orders, 
-    y='Order ID', 
-    title="Monthly Order Trend",
-    labels={'value': 'Frequency'}  # This changes the y-axis label
-)
-st.plotly_chart(fig_monthly_orders)
+    monthly_orders = filtered_data.set_index('Sent Date').resample('M')['Order ID'].nunique()
+    fig_monthly_orders = px.line(monthly_orders, y='Order ID', title="Monthly Order Trend")
+    st.plotly_chart(fig_monthly_orders)
 
-# Top Modifiers
-modifier_counts = filtered_data['Modifier'].str.split(', ').explode().value_counts().head(10)
-fig_modifiers = px.bar(
-    modifier_counts, 
-    x=modifier_counts.index, 
-    y=modifier_counts.values, 
-    title="Top 10 Modifiers",
-    labels={'value': 'Frequency'}  # This changes the y-axis label
-)
-st.plotly_chart(fig_modifiers)
+    # Top Modifiers
+    modifier_counts = filtered_data['Modifier'].str.split(', ').explode().value_counts().head(10)
+    fig_modifiers = px.bar(modifier_counts, x=modifier_counts.index, y=modifier_counts.values, title="Top 10 Modifiers")
+    st.plotly_chart(fig_modifiers)
 else:
     st.write("No data available for selected filters.")
