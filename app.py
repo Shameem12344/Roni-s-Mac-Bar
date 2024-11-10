@@ -243,7 +243,6 @@ shirt_data = load_shirt_data()
 shirt_data['Sent Date'] = pd.to_datetime(shirt_data['Sent Date'])
 
 # Add Shirt Insights tab to view_mode
-view_mode = st.selectbox("View Mode", ["Main Metrics", "Additional Insights", "Shirt Analysis"])
 
 if view_mode == "Shirt Analysis":
     st.markdown("## Shirt Size Analysis")
