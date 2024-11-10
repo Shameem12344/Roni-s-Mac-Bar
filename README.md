@@ -27,3 +27,7 @@ We additionally included data for the merch at Roni' Mac Bar, which we find as a
 
 ### Conclusion
 We hope Roni's Mac Bar can use the insights we have gained from the data, and the dashboard we created to expand and optimize their business in order to expand and reap the most profit possible.
+
+### Skills learned
+* Learned how to properly parse, drop, concatenate, and export that data as a csv so it is prepared and ready to be used to gain insights from.
+* Learned how to use python with the streamlit framework to make the frontend dashboard for businesses to see graphs and key insights in their company based off of the data they have accumulated. 
