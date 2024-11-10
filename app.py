@@ -235,7 +235,7 @@ with st.expander("Detailed Statistics"):
 
 # Extra section on Shirt Data:
 # Load shirts data
-else view_mode == "Shirt Analysis":
+if view_mode == "Shirt Analysis":
     # Load shirts data
     @st.cache_data
     def load_shirt_data():
