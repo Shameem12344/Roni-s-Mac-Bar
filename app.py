@@ -232,3 +232,143 @@ with st.expander("Detailed Statistics"):
         st.write(f"Average Items per Order: {avg_items_per_order:.1f}")
         if 'Modifier' in filtered_data.columns:
             st.write(f"Most Common Modifier: {filtered_data['Modifier'].mode()[0]}")
+
+# Extra section on Shirt Data:
+# Load shirts data
+@st.cache_data
+def load_shirt_data():
+    return pd.read_csv('shirts.csv')
+
+shirt_data = load_shirt_data()
+shirt_data['Sent Date'] = pd.to_datetime(shirt_data['Sent Date'])
+
+# Add Shirt Insights tab to view_mode
+view_mode = st.selectbox("View Mode", ["Main Metrics", "Additional Insights", "Shirt Analysis"])
+
+if view_mode == "Shirt Analysis":
+    st.markdown("## Shirt Size Analysis")
+    
+    # Create layout with two rows and two columns
+    row1_col1, row1_col2 = st.columns(2)
+    row2_col1, row2_col2 = st.columns(2)
+
+    # Graph 1: Size Distribution
+    with row1_col1:
+        size_distribution = shirt_data['Modifier'].value_counts()
+        fig_sizes = px.pie(
+            values=size_distribution.values,
+            names=size_distribution.index,
+            title="Shirt Size Distribution",
+            height=400,
+            color_discrete_sequence=px.colors.qualitative.Set3
+        )
+        fig_sizes.update_layout(
+            template="plotly_dark",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)'
+        )
+        st.plotly_chart(fig_sizes, use_container_width=True)
+
+    # Graph 2: Size Trends Over Time
+    with row1_col2:
+        # Create monthly size trends
+        shirt_data['Month'] = shirt_data['Sent Date'].dt.strftime('%Y-%m')
+        size_trends = shirt_data.pivot_table(
+            index='Month',
+            columns='Modifier',
+            values='Order item',
+            aggfunc='sum'
+        ).fillna(0)
+        
+        fig_trends = px.line(
+            size_trends,
+            title="Size Trends Over Time",
+            height=400
+        )
+        fig_trends.update_layout(
+            xaxis_title="Month",
+            yaxis_title="Number of Orders",
+            template="plotly_dark",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            legend_title="Shirt Size"
+        )
+        st.plotly_chart(fig_trends, use_container_width=True)
+
+    # Graph 3: Time of Day Preference by Size
+    with row2_col1:
+        shirt_data['Hour'] = shirt_data['Sent Date'].dt.hour
+        hourly_size = pd.crosstab(shirt_data['Hour'], shirt_data['Modifier'])
+        
+        fig_hourly = px.line(
+            hourly_size,
+            title="Shirt Size Orders by Hour",
+            height=400
+        )
+        fig_hourly.update_layout(
+            xaxis_title="Hour of Day",
+            yaxis_title="Number of Orders",
+            template="plotly_dark",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            legend_title="Shirt Size",
+            xaxis=dict(tickmode='linear', tick0=0, dtick=2)
+        )
+        st.plotly_chart(fig_hourly, use_container_width=True)
+
+    # Graph 4: Multiple Size Orders Analysis
+    with row2_col2:
+        multiple_orders = shirt_data[shirt_data['Order item'] > 1]
+        multiple_size_dist = multiple_orders['Modifier'].value_counts()
+        
+        fig_multiple = px.bar(
+            multiple_size_dist,
+            title="Multiple Shirt Orders by Size",
+            height=400,
+            color=multiple_size_dist.values,
+            color_continuous_scale='Viridis'
+        )
+        fig_multiple.update_layout(
+            xaxis_title="Shirt Size",
+            yaxis_title="Number of Multiple Orders",
+            template="plotly_dark",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)'
+        )
+        st.plotly_chart(fig_multiple, use_container_width=True)
+
+    # Add Key Metrics
+    st.markdown("### Key Shirt Insights")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        total_shirts = shirt_data['Order item'].sum()
+        st.metric("Total Shirts Sold", total_shirts)
+        
+    with col2:
+        most_popular_size = shirt_data['Modifier'].mode()[0]
+        st.metric("Most Popular Size", most_popular_size)
+        
+    with col3:
+        multiple_order_count = len(multiple_orders)
+        st.metric("Multiple Shirt Orders", multiple_order_count)
+        
+    with col4:
+        avg_shirts_per_order = shirt_data['Order item'].mean()
+        st.metric("Avg Shirts per Order", f"{avg_shirts_per_order:.2f}")
+
+    # Additional Statistics
+    with st.expander("Detailed Shirt Statistics"):
+        stat_col1, stat_col2 = st.columns(2)
+        
+        with stat_col1:
+            st.write("### Size Distribution")
+            size_percentages = (size_distribution / size_distribution.sum() * 100).round(1)
+            for size, percentage in size_percentages.items():
+                st.write(f"{size}: {percentage}%")
+            
+        with stat_col2:
+            st.write("### Order Patterns")
+            st.write(f"Peak ordering hour for shirts: {shirt_data['Hour'].mode()[0]}:00")
+            st.write(f"Total number of unique orders: {len(shirt_data['Order ID'].unique())}")
+            st.write(f"Percentage of multiple shirt orders: {(multiple_order_count/len(shirt_data)*100):.1f}%")
