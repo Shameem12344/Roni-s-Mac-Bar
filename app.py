@@ -58,3 +58,41 @@ fig_modifiers.update_layout(
 
 st.plotly_chart(fig_modifiers)
 
+# Total Sales Over Time (daily trend)
+daily_orders = filtered_data.set_index('Sent Date')['Order ID'].resample('D').count()
+fig_daily_sales = px.line(
+    daily_orders,
+    title="Total Sales Over Time",
+    labels={'value': 'Order ID', 'Sent Date': 'Sent Date'}
+)
+
+fig_daily_sales.update_layout(
+    xaxis_title="Sent Date",
+    yaxis_title="Order ID",
+    template="plotly_dark",  # This gives the dark theme
+    plot_bgcolor='rgba(0,0,0,0)',  # Transparent background
+    paper_bgcolor='rgba(0,0,0,0)'  # Transparent paper
+)
+
+st.plotly_chart(fig_daily_sales)
+
+# Average Time of Day for Business
+# Extract hour from datetime and count orders by hour
+hourly_orders = filtered_data['Sent Date'].dt.hour.value_counts().sort_index()
+fig_hourly = px.line(
+    hourly_orders,
+    title="Average Time of Day for Business",
+    labels={'index': 'Hour', 'value': 'Order Count'}
+)
+
+fig_hourly.update_layout(
+    xaxis_title="Hour",
+    yaxis_title="Order Count",
+    template="plotly_dark",  # This gives the dark theme
+    plot_bgcolor='rgba(0,0,0,0)',  # Transparent background
+    paper_bgcolor='rgba(0,0,0,0)',  # Transparent paper
+    xaxis=dict(tickmode='linear', tick0=0, dtick=1)  # Show all hours on x-axis
+)
+
+st.plotly_chart(fig_hourly)
+
