@@ -48,7 +48,14 @@ fig_modifiers = px.bar(
     x=modifier_counts.index, 
     y=modifier_counts.values, 
     title="Top 10 Modifiers",
-    labels={'value': 'Frequency'}  # This changes the y-axis label
+    labels={'y': 'Frequency', 'x': 'Modifiers'}  # Use 'y' instead of 'value'
 )
-st.plotly_chart(fig_modifiers)
 
+# You can also set it using figure update layout
+fig_modifiers.update_layout(
+    yaxis_title="Frequency"
+)
+
+st.plotly_chart(fig_modifiers)
+else:
+    st.write("No data available for selected filters.")
