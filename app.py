@@ -30,7 +30,7 @@ with col3:
     menu_items = st.multiselect("Menu Items", options=data['Parent Menu Selection'].unique(), 
                                default=data['Parent Menu Selection'].unique())
 with col4:
-    view_mode = st.selectbox("View Mode", ["Main Metrics", "Additional Insights"])
+    view_mode = st.selectbox("View Mode", ["Main Metrics", "Additional Insights", "Shirt Analysis"])
 
 # Filter Data
 filtered_data = data[
