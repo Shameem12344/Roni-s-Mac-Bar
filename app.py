@@ -244,7 +244,7 @@ shirt_data['Sent Date'] = pd.to_datetime(shirt_data['Sent Date'])
 
 # Add Shirt Insights tab to view_mode
 
-elif view_mode == "Shirt Analysis":
+if view_mode == "Shirt Analysis":
     st.markdown("## Shirt Size Analysis")
     
     # Create layout with two rows and two columns
