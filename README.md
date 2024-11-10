@@ -25,3 +25,5 @@ We additionally included data for the merch at Roni' Mac Bar, which we find as a
 * Most Popular Shirt Sizes: Small(23.5%), Medium(23.5%), and 2X Shirt(23.5%)
 * Peak ordering hours for Shirts: 17:00(5:00pm)
 
+### Conclusion
+We hope Roni's Mac Bar can use the insights we have gained from the data, and the dashboard we created to expand and optimize their business in order to expand and reap the most profit possible.
