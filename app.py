@@ -57,5 +57,4 @@ fig_modifiers.update_layout(
 )
 
 st.plotly_chart(fig_modifiers)
-else:
-    st.write("No data available for selected filters.")
+
