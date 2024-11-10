@@ -52,5 +52,3 @@ fig_modifiers = px.bar(
 )
 st.plotly_chart(fig_modifiers)
 
-else:
-    st.write("No data available for selected filters.")
