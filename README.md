@@ -6,3 +6,4 @@ For the data setup, we used google colab(https://colab.research.google.com/drive
 In order to setup this project, all you need to do is go to streamlit cloud(https://streamlit.io/cloud) and select your github and choose the repository and what file(app.py) that you want the cloud to run, and that is simply all that needs to be done to setup the dashboard. 
 
 ### Dashboard Functionality
+Using the code in app.py we created a very clean dashboard to view insights from the monthly Roni's Mac Bar data presented to us. It is 
