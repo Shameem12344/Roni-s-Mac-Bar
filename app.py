@@ -5,7 +5,7 @@ import plotly.express as px
 # Load data (replace 'path_to_your_combined_data.csv' with actual file path in your GitHub repo)
 @st.cache_data
 def load_data():
-    return pd.read_csv('path_to_your_combined_data.csv')
+    return pd.read_csv('nona_data - nona_data.csv')
 
 data = load_data()
 
